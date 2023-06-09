@@ -1,0 +1,32 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>datos</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <h3><strong>Bienvenido</strong></h3>
+  <ion-card *ngFor="let myDatos of datos">
+    <ion-card-content>
+      <ion-accordion-group>
+        <ion-accordion value="first">
+          <ion-item slot="header">
+            <ion-label>{{myDatos.nombre}} {{myDatos.apellido}}</ion-label>
+          </ion-item>
+          <div class="ion-padding" slot="content">
+            <div *ngIf="myDatos.edad >= 18; else menor">
+                <strong>{{myDatos.deporte}}</strong>
+                <img src="{{myDatos.imagen}}" alt="">
+            </div>
+          </div>
+          <ng-template #menor>
+            <h1><strong>No se puede mostrar información (Menor de Edad)</strong></h1>
+          </ng-template>
+        </ion-accordion>
+      </ion-accordion-group>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
