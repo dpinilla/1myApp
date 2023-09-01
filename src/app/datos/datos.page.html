@@ -8,18 +8,25 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
+  <ion-fab horizontal="end" vertical="bottom">
+    <ion-fab-button >
+      <ion-icon  name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
   <h3><strong>Bienvenido</strong></h3>
   <ion-card *ngFor="let myDatos of datos">
     <ion-card-content>
       <ion-accordion-group>
         <ion-accordion value="first">
           <ion-item slot="header">
-            <ion-label>{{myDatos.nombre}} {{myDatos.apellido}}</ion-label>
+            <ion-label>{{myDatos.datNombre}} {{myDatos.datApellido}}</ion-label>
+            <ion-icon color="danger" slot="end" name="trash-outline" (click)="removeDatos(myDatos.datId)"></ion-icon>
+            <ion-icon color="primary" slot="end" name="create-outline"></ion-icon>
           </ion-item>
           <div class="ion-padding" slot="content">
-            <div *ngIf="myDatos.edad >= 18; else menor">
-                <strong>{{myDatos.deporte}}</strong>
-                <img src="{{myDatos.imagen}}" alt="">
+            <div *ngIf="myDatos.datEdad >= 18; else menor">
+                <strong>{{myDatos.datDeporte}}</strong>
+                <img src="{{myDatos.datImagen}}" alt="">
             </div>
           </div>
           <ng-template #menor>

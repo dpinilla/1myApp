@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ConexionService } from '../services/conexion.service';
+import { AlertController, ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-datos',
@@ -6,15 +8,23 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./datos.page.scss'],
 })
 export class DatosPage implements OnInit {
-  datos: Array<any> = []
-  constructor() { }
+  //datos: Array<any> = []
+  datos:any
+  constructor(private conexion: ConexionService,
+              private alertCtrl: AlertController,
+              private toastController: ToastController) { }
 
   ngOnInit() {
     this.visualizaDatos()
   }
 
   visualizaDatos(){
-    this.datos=[
+    this.conexion.consultaDatos().subscribe(
+      data => {
+        this.datos = data
+      }
+    )
+    /* this.datos=[
       {
         nombre:"Diego",
         apellido: "Pinilla",
@@ -36,7 +46,37 @@ export class DatosPage implements OnInit {
         deporte: "Tenis",
         imagen: "https://www.tiendacompensar.com/ccstore/v1/images/?source=/file/v1713271621845513499/products/id1008.pelota-de-tenis-y-raqueta-de-tenis.jpg"
       }
-    ]
+    ] */
+  }
+
+  removeDatos(datId:any){
+    let remove:any = {}
+    remove["datId"] = datId
+    this.alertCtrl.create({
+      header: "Eliminar",
+      message: "¿Está seguro que desea ELIMINAR?",
+      buttons:[
+        {text: "Cancelar"},
+        {text: "Eliminar",
+         handler:() => {
+          this.conexion.removeDatos(remove).subscribe(
+            data => {
+              this.presentToast()
+            }
+          )
+         },
+      },
+      ],
+    })
+    .then((myAlert) => myAlert.present())
+  }
+
+  async presentToast() {
+    const toast = await this.toastController.create({
+      message: 'Registro eliminado',
+      duration: 2000
+    });
+    toast.present();
   }
 
 }
