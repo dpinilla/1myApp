@@ -7,6 +7,10 @@ const routes: Routes = [
   {
     path: '',
     component: DatosPage
+  },
+  {
+    path: 'insert-datos',
+    loadChildren: () => import('./insert-datos/insert-datos.module').then( m => m.InsertDatosPageModule)
   }
 ];
 

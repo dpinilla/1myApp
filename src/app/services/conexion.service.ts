@@ -1,11 +1,18 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, Subject, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ConexionService {
+
+  private _refresh$ = new Subject<void>()
+
+  get refresh$(){
+    return this._refresh$
+  }
+
   url = "http://127.0.0.1:80"
 
   constructor(private http:HttpClient) { }
@@ -18,5 +25,9 @@ export class ConexionService {
   removeDatos(datId:any){
     return this.http
     .post(this.url+"/removeDatos", JSON.stringify(datId))
+    .pipe(tap(() => {
+      this.refresh$.next()
+    } 
+    ))
   }
 }

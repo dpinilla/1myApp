@@ -79,4 +79,13 @@ export class DatosPage implements OnInit {
     toast.present();
   }
 
+  doRefresh(event: any) {
+    this.conexion.consultaDatos().subscribe(
+      response => {
+        this.datos = response
+        event.target.complete();
+      }
+    )
+  }
+
 }
