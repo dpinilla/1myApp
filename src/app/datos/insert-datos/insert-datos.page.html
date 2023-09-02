@@ -5,7 +5,7 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <form>
+  <form [formGroup]="form" (submit)="onSubmit()">
     <ion-item>
       <ion-input
        type="text"
@@ -53,6 +53,7 @@
     </ion-item>
     <ion-button
       type="submit"
+      [disabled]="form.invalid"
     > Enviar
     </ion-button>
   </form>

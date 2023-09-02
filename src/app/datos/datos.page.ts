@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ConexionService } from '../services/conexion.service';
-import { AlertController, ToastController } from '@ionic/angular';
+import { AlertController, ModalController, ToastController } from '@ionic/angular';
+import { InsertDatosPage } from './insert-datos/insert-datos.page';
 
 @Component({
   selector: 'app-datos',
@@ -12,7 +13,8 @@ export class DatosPage implements OnInit {
   datos:any
   constructor(private conexion: ConexionService,
               private alertCtrl: AlertController,
-              private toastController: ToastController) { }
+              private toastController: ToastController,
+              private modalCtrl: ModalController) { }
 
   ngOnInit() {
     this.visualizaDatos()
@@ -86,6 +88,16 @@ export class DatosPage implements OnInit {
         event.target.complete();
       }
     )
+  }
+
+  insert(){
+    this.modalCtrl.create({
+      component: InsertDatosPage
+    })
+    .then((modal) =>{
+      modal.present()
+      return modal.onDidDismiss
+    })
   }
 
 }
