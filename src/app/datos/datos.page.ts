@@ -100,4 +100,14 @@ export class DatosPage implements OnInit {
     })
   }
 
+  updateDatos(datos:any){
+    this.modalCtrl.create({
+      component: InsertDatosPage, componentProps: {datos}
+    })
+    .then((modal) =>{
+      modal.present()
+      return modal.onDidDismiss
+    })
+  }
+
 }
