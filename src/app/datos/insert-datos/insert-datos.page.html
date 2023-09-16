@@ -54,7 +54,7 @@
     <ion-button
       type="submit"
       [disabled]="form.invalid"
-    > Enviar
+    > {{isUpdate? 'Actualizar':'Crear'}}
     </ion-button>
   </form>
   <!-- <ion-header collapse="condense">
